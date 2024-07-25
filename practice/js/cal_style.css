@@ -1,0 +1,18 @@
+.calc{
+    width:400px;
+    height:600px;
+    background-color: rgb(61, 205, 25);
+    margin-left: 200px;
+}
+#input-screen{
+    width: 250px;
+    height: 40px;
+    margin-left: 80px;
+    margin-top: 30px;
+}
+.btn{
+    width: 50px;
+    height: 50px;
+    margin-left: 40px;
+    margin-top: 20px;
+}
