@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery</title>
+</head>
+<body>
+    
+    <button id="btn">Click</button>
+    <div id="box" style="width:300px;height:300px;background: greenyellow;">
+    </div>
+
+    <input type="text" id="inp">
+    <label id="error" style="display:none;">Enter minimum 4 characters</label>
+    <input type="text" id="">
+
+
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function(){
+            $('#btn').click(function(){  //#btn because btn is id ,we givn as is
+                //alert('Button clicked')
+               // $('#box').hide()
+                  $('#box').fadeToggle() //and toggle()
+            })
+
+            $('#btn').mouseenter(function(){
+                $(this).css({'background':'red'})
+            })
+
+            $('#inp').blur(function(){
+                var text = $(this).val()
+                if(text.length < 4){
+                    //alert('Enter atleast 4 characters')
+                    $('#error').show()
+                }else{
+                    $('#error').hide()
+                }
+            })
+
+
+        })
+
+        
+    </script>
+</body>
+</html>

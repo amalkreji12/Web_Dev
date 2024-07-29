@@ -18,3 +18,8 @@ function btn(){
 
 }
 
+function prt(){
+    console.log(x);
+    var x;
+    console.log(k);
+}
