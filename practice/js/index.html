@@ -77,6 +77,54 @@
             function display(){
                 console.log("Hello")
             }
+
+            const number1=[1,2,3,4,5];
+            const number2=[6,7,8,9,10];
+            const number3=[...number1,...number2]; // ... spread operator
+            console.log(number3); 
+
+            const students={
+                name:'Apple',
+                age:10,
+                address:'123 house'
+            }
+
+            console.log(students);
+            //const {name,age,address} = students;
+            //console.log(name)
+            console.log(students.name);
+
+            //Arrow Function
+            const sayHello =() =>{
+                console.log('Hello World')
+            }
+            console.log(sayHello);
+            sayHello()
+
+            //
+            const number=[1,2,3,4,5]
+            const square=(n) =>{
+                return n*n;
+            }
+            const tot=number.map(square)
+            console.log(tot);
+            //
+            const print=(x)=>{   //function
+                console.log(x);
+            }
+            number.forEach(print)
+            
+
+
+            const std ={
+                name:'apple',
+                age:10,
+                sayHello:()=>{  //function
+                    console.log('Hello'); 
+                }
+            }
+            console.log(std.sayHello())
+
         }
     </script>
 
