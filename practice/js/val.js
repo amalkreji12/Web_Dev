@@ -20,10 +20,10 @@ $(document).ready(function(){
                 minlength:6,
                 required:true
             },
-            conPass:{
-                required:true,
-                minlength:6,
-                equalTo:'["name=pass"]'
+            // conPass:{
+            //     required:true,
+            //     minlength:6,
+            //     equalTo:'["name=pass"]'
             },
             dob:{
                 required:true
@@ -32,10 +32,11 @@ $(document).ready(function(){
                 required:true
             }
         },
+
         messages:{  //for custom messages
             fname:{
                 required:'Enter first name',
-                minlength:'Enter atleast 4 characters'
+                minlength:'Enter atleast 4 characters',
             }
         }
     })
