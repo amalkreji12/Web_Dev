@@ -19,7 +19,19 @@ function btn(){
 }
 
 function prt(){
-    console.log(x);
-    var x;
-    console.log(k);
+    //console.log(x);
+    //var x;
+    //console.log(k); //not defined
+
+    function a(){
+        var b=10;
+        c();
+        function c(){
+            console.log(b);
+        }
+    }
+    a();
+    //console.log(b); //not defined
+
+
 }

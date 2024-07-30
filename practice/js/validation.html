@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation</title>
+
+    <style>
+        .main-body{
+            height: 600px;
+            width: 500px;
+            background: greenyellow;
+            margin-left: 100px;
+        }
+        .form{
+            padding-left: 100px;
+            padding-top: 100px;
+        }
+    </style>
+
+
+</head>
+<body>
+    <div class="main-body">
+        <div class="form">
+            <form id="signup" action="index.html">
+                <label>First Name :</label>
+                <input name="fname" type="text" placeholder="Enter First Name" >
+                <br>
+                <label>Surename :</label>
+                <input name="sname" type="text" placeholder="Enter Surename">
+                <br>
+                <label>Email :</label>
+                <input name="emailAdd" type="email" placeholder="Enter Email">
+                <br>
+                <label>Passward :</label>
+                <input name="pass" type="password" placeholder="New Passward">
+                <br>
+                <label>Confirm password</label>
+                <input name="conPass" type="password" placeholder="Confirm Passward">
+                <br>
+                <label>Birthday :</label>
+                <input name="dob" type="date">
+                <br>
+                <label>Gender</label>
+                <input name="gender" type="radio">
+                <label>Male</label>
+                <input name="gender" type="radio">
+                <label>Female</label>
+                <br>
+                <button type="submit" styl="height:100px; width:100px">Submit</button>
+    
+            </form> 
+        </div>
+        
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+    <script src="val.js"></script>
+</body>
+</html>
