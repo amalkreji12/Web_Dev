@@ -16,6 +16,7 @@ function btn(){
         console.log(a);
     }
 
+
 }
 
 function prt(){
@@ -33,5 +34,22 @@ function prt(){
     a();
     //console.log(b); //not defined
 
+    // var a=10;  
+    // var a=30;
+    // console.log(a);  //30 will printed
 
+    // let a=10;
+    // let a=30;  
+    // console.log(a);  // This will give syntax error because let is already declared
+
+    let a = 100;
+    {
+        let a = 10;
+        console.log(a);
+    }
+    console.log(a);
+
+
+
+    
 }

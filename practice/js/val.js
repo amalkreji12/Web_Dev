@@ -33,11 +33,11 @@ $(document).ready(function(){
             }
         },
 
-        messages:{  //for custom messages
-            fname:{
-                required:'Enter first name',
-                minlength:'Enter atleast 4 characters',
-            }
-        }
+        // messages:{  //for custom messages
+        //     fname:{
+        //         required:'Enter first name',
+        //         minlength:'Enter atleast 4 characters',
+        //     }
+        // }
     })
 })
