@@ -42,14 +42,35 @@ function prt(){
     // let a=30;  
     // console.log(a);  // This will give syntax error because let is already declared
 
-    let a = 100;
-    {
-        let a = 10;
-        console.log(a);
+    // let a = 100;
+    // {
+    //     let a = 10;
+    //     console.log(a);
+    // }
+    // console.log(a);
+
+    //setTimeout and closures
+
+    // function x(){
+    //     for(var i=1;i<=5;i++){
+    //         function close(i){
+    //             setTimeout(function(){
+    //                 console.log(i);
+    //             },i*2000);
+    //         }
+    //         close(i);            
+    //     }   
+    // }
+    // x();
+
+    function outer(b){
+        var a=10;
+        function inner(){
+            console.log(a,b);
+        }
+        //return inner;
     }
-    console.log(a);
+    var close=outer("hello");
+    close();
 
-
-
-    
 }
