@@ -1,3 +1,4 @@
+
 // class Hello{
 //     constructor(num1,num2){
 //         this.num1=num1;
@@ -87,3 +88,4 @@ hey(hello);
 
 var mo=require('./basics')
 mo.hello();
+
