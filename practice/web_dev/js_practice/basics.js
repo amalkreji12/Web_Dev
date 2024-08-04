@@ -126,3 +126,10 @@ console.log(d.getDate());
 diff=d.getTime()- d1.getTime(); 
 var diffDays = diff / (1000 * 3600 * 24);
 console.log(diffDays);
+
+
+/// for module example
+
+module.exports.hello=function(){
+    console.log('Hello World');
+}
