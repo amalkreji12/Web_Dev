@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<style>
+    .main-body{
+        width: 100%;
+        height:730px;
+        background: violet;
+        position: relative;
+
+    }
+    .form-body{
+        width:400px;
+        height:500px;
+        background: yellow;
+        border: 2px solid;
+        /* padding-left: 70px;
+        padding-top: 50px; */
+        position: absolute;
+        top: 20%;
+        left: 40%;
+        margin: -50px 0 0 -50px;
+    }
+
+    body{
+        margin: 0;
+    }
+    #form-content{
+        text-align: center;
+    }
+
+</style>
+<body>
+    <div class="main-body">
+        <div class="form-body">
+            <form action="/signupaction" id="form-content" method="GET">
+                <h1 >Form</h1>
+                <label>Name :</label>
+                 <input type="text" id="fullname" name="name" placeholder="Enter your name"><br>  <!--name is used to display in url -->
+                <br>
+                <label>Age :</label>
+                <input type="text" id="age" name="age" placeholder="Enter your age"><br>
+                <br>
+                <label>Place :</label>
+                <input type="text" id="place" name="place" placeholder="Enter your place"><br>
+                <br>
+                <!-- <label>Gender :</label>
+                <input type="radio">
+                <label>Male</label>
+                <input type="radio">
+                <label>Female</label><br>
+                <br> -->
+                <input type="submit" value="Submit" style="background: red;">
+            </form>
+        </div>
+        
+    </div>
+    
+</body>
+</html>
