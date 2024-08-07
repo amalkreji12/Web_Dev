@@ -1,3 +1,25 @@
-<h1>About Session</h1>
+<h1>About Session</h1> 
 <h2>Hello{{text}}</h2>
 <h3>{{text}}</h3>
+
+{{#each disName}}
+
+<h1>{{@index}}.{{this}}</h1>
+
+{{/each}}
+
+<h1>{{person.comments.comment}}</h1>
+
+{{#if value.admin}}
+<h1>This is admin</h1>
+{{else}}
+<h1>This is not admin</h1>
+{{/if}}
+
+{{#with person}}
+{{#with comments}}
+<h2>{{comment}}</h2>
+{{/with}}
+<h1>{{comments.comment}}</h1>
+{{/with}}
+
