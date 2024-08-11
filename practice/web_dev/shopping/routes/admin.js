@@ -3,6 +3,7 @@ const { log } = require('handlebars');
 var router = express.Router();
 var productHelper =  require('../helpers/product-helpers');
 
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
 

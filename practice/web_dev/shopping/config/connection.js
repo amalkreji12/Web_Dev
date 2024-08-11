@@ -1,6 +1,3 @@
-
-
-
 const mongoClient = require('mongodb').MongoClient
 const state={
     db:null
@@ -13,8 +10,9 @@ module.exports.connect=function(done){
     mongoClient.connect(url,function(err,data){
         if(err) return done(err);
         state.db=data.dbname;
-        done()
+        
     })
+    done();
 }
 
 module.exports.get=function(){
