@@ -7,17 +7,18 @@ var hbs = require('express-handlebars');
 var fileUpload = require('express-fileupload');
 var db=require('./config/connection');
 
+//Connecting to database
+db.connectToDatabase();
 
-
-db.connect((err)=>{
-  if(!err) console.log("Database connected successfully");
-  else console.log(`Connection Error: ${err}`);
-})
-
+// db.connectdb((err)=>{
+//   if(!err) console.log("Database connected successfully");
+//   else console.log(`Connection Error: ${err}`);
+// })
 
 
 var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
+const { Db } = require('mongodb');
 
 var app = express();
 
@@ -33,17 +34,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileUpload());
 
-//Connecting DataBase
-// db.connect(function(err){
-//   if(err){
-//     console.error('Error connecting'+err);
-//   }else{
-//     console.log("Database connected");
-//   } 
-// })
-
-
-
+//Routes
 
 app.use('/', userRouter);
 app.use('/admin', adminRouter);

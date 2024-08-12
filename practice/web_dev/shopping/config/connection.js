@@ -1,20 +1,28 @@
-const mongoClient = require('mongodb').MongoClient
-const state={
-    db:null
-}
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/mydb";
+var dbname='shopping';
 
-module.exports.connect=function(done){
-    const url='mongodb://localhost:27017'; 
-    const dbname='shopping';
-    
-    mongoClient.connect(url,function(err,data){
-        if(err) return done(err);
-        state.db=data.dbname;
-        
+let db;
+
+function connectToDatabase() {
+  return MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then((client) => {
+      console.log("Connected successfully to database");
+      db = client.db(dbname);
     })
-    done();
+    .catch((err) => {
+      console.error("Failed to connect to the database:", err);
+    });
 }
 
-module.exports.get=function(){
-    return state.db
+function getDb() {
+  if (!db) {
+    console.warn("Database not initialized yet");
+  }
+  return db;
 }
+
+module.exports = {
+  connectToDatabase,
+  getDb
+};

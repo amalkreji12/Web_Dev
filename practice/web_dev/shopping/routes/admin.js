@@ -2,7 +2,7 @@ var express = require('express');
 const { log } = require('handlebars');
 var router = express.Router();
 var productHelper =  require('../helpers/product-helpers');
-
+//var productHelper =  require('../helpers/pr');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -39,7 +39,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/add-product',function(req,res){
-  res.render('admin/add-product');
+  res.render('admin/add-product',{admin:true});
 })
 
 router.post('/add-product',function(req,res){
