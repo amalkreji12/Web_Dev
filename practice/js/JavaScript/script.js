@@ -136,3 +136,112 @@ function attachEventListner(){     ///closure along with event listener
     });
 }
 attachEventListner();
+
+//HIGHER ORDER FUNCTIONS
+
+const radius=[2,3,4,1];
+
+const area=function(radius){
+    return Math.PI*radius*radius;
+};
+const circumference=function(radius){
+    return 2*Math.PI*radius;
+};
+const diameter=function(radius){
+    return 2*radius;
+};
+
+const calculate=function(radius,logic){
+    const output=[];
+    for(let i=0;i<radius.length;i++){
+        output.push(logic(radius[i]));
+    }
+    return output;
+};
+
+// console.log(calculate(radius,area));
+// console.log(calculate(radius,circumference));
+// console.log(calculate(radius,diameter));
+
+/////// MAP ////////////////////////////////////////////////////
+
+const arr=[1,2,3,4,5];
+
+// function double(x){
+//     return x*2;
+// }
+
+// //const output=arr.map(double);
+// const output=arr.map(function(x){
+//     return x*3;
+// });
+// console.log(output);
+
+//////////////////////////// FILTER /////////////////////////////////////
+
+/// odd values
+
+// function isOdd(x){
+//     return x%2;
+// }
+// const out=arr.filter(isOdd);
+// console.log(out);
+
+///////////////////////////////// REDUCE /////////////////////////////////////////////
+
+// Use when we have to take a whole array and come out with a single value
+// SUM
+// const output=arr.reduce(function(acc,curr){
+//     acc=acc+curr;
+//     return acc;
+// },0);
+
+// console.log(output);
+
+//LARGEST
+
+// const large=arr.reduce(function(acc,curr){
+//     if(curr>acc){
+//         acc=curr;
+//     }
+//     return acc;
+// },0);
+// console.log(large);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+const user = [
+    {firstName:'Apple',lastName:'Mango',age:10},
+    {firstName:'Banana',lastName:'Orange',age:20},
+    {firstName:'Pineapple',lastName:'Watermelon',age:10},
+    {firstName:'Grapes',lastName:'Kiwi',age:40}
+];
+
+// LIST WITH FULL NAME
+//MAP
+
+const out=user.map(function(x){
+    return x.firstName + ' ' + x.lastName;
+})
+
+console.log(out);
+
+/// AGE COUNT
+// REDUCE
+
+const output = user.reduce(function(acc,curr){
+    if(acc[curr.age]){
+        acc[curr.age] = ++acc[curr.age];
+    }else{
+        acc[curr.age] = 1;
+    }
+    return acc;
+},{});
+
+console.log(output);
+
+/// PRINT FIRST NAME OF ALL ,AGE <30
+// FILTER
+
+ const outFilter = user.filter((x)=>x.age<20).map((x)=>x.firstName);
+ console.log(outFilter);
