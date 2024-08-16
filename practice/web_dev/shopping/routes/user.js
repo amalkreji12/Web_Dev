@@ -16,9 +16,22 @@ router.get('/', function(req, res, next) {
 
   productHelper.getAllProducts().then((product)=>{
     //console.log(product);
-    res.render('user/view-products',{admin:false,product});
+    res.render('user/view-products',{product});
   })
 
 });
+
+router.get('/login',function(req,res){
+  res.render('user/login')
+});
+
+router.get('/signup',function(req,res){
+  res.render('user/signup')
+});
+
+router.post('/signup',function(req,res){
+  
+});
+
 
 module.exports = router;

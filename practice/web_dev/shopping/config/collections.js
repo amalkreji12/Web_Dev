@@ -2,5 +2,6 @@
 
 
 module.exports={
-    PRODUCT_COLLECTION:'products'
+    PRODUCT_COLLECTION:'products',
+    USER_COLLECTION:'user'
 }
