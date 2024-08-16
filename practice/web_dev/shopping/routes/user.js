@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
 
   productHelper.getAllProducts().then((product)=>{
     //console.log(product);
-    res.render('admin/view-products',{admin:true,product});
+    res.render('user/view-products',{admin:false,product});
   })
 
 });
