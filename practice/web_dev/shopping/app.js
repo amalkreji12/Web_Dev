@@ -10,19 +10,14 @@ var db=require('./config/connection');
 //Connecting to database
 db.connectToDatabase();
 
-// db.connectdb((err)=>{
-//   if(!err) console.log("Database connected successfully");
-//   else console.log(`Connection Error: ${err}`);
-// })
-
-
+///////////////////// Routes ///////////////////////////////////////
 var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
 const { Db } = require('mongodb');
 
 var app = express();
 
-// view engine setup
+//////////////////// view engine setup //////////////////////////
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.engine('hbs',hbs.engine({extname:'hbs',defaultLayout:'layout',layoutsDir:__dirname+'/views/layout/',partialsDir:__dirname+'/views/partials/'}));
@@ -34,7 +29,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileUpload());
 
-//Routes
+///// When image is not displayed in view-products
+// process.env.PWD = process.cwd()   
+// app.use(express.static(process.env.PWD + '/public/product-images'));
+
+////////////////////// Routes ////////////////////////////
 
 app.use('/', userRouter);
 app.use('/admin', adminRouter);

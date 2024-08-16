@@ -1,4 +1,6 @@
 var db = require('../config/connection');
+var collection = require('../config/collections');
+const collections = require('../config/collections');
 
 module.exports = {
   addProduct(product, callback) {
@@ -6,11 +8,26 @@ module.exports = {
     database.collection('products').insertOne(product)
       .then((result) => {
         console.log("Product added:", result);
-        callback(true); // Invoke the callback with `true` on success
+        callback(result.insertedId); // Invoke the callback with `true` on success
       })
       .catch((err) => {
         console.error("Error inserting product:", err);
         callback(false); // Invoke the callback with `false` on failure
       });
+  },
+
+
+
+
+  getAllProducts(){
+    return new Promise(async(resolve,reject)=>{
+      try{
+        let product=await db.getDb().collection(collections.PRODUCT_COLLECTION).find().toArray();
+        resolve(product);
+      }catch(error){
+        reject(error);
+      }
+      
+    })
   }
 };
