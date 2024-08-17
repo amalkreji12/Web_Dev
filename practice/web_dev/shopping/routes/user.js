@@ -1,6 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var productHelper =  require('../helpers/product-helpers');
+var userHelper = require('../helpers/user-helpers');
+
+
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -30,8 +34,26 @@ router.get('/signup',function(req,res){
 });
 
 router.post('/signup',function(req,res){
-  
+  //console.log(req.body);
+  userHelper.doSignUP(req.body).then((response)=>{
+    console.log(response);
+  })
+  .catch((err)=>{
+    res.status(500).send('Sign up failed');
+  })
+
 });
+
+router.post('/login',(req,res)=>{
+  userHelper.doLogin(req.body).then((response)=>{
+    if(response.status){
+      res.redirect('/');
+    }else{
+      res.redirect('/login');
+    }
+  })
+})
+
 
 
 module.exports = router;
