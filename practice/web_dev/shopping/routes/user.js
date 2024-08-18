@@ -3,30 +3,36 @@ var router = express.Router();
 var productHelper =  require('../helpers/product-helpers');
 var userHelper = require('../helpers/user-helpers');
 
+// used to check whether the user is logged in or not
+const varifyLogin = (req,res,next)=>{
+  if(req.session.loggedIn){
+    next();
+  }else{
+    res.redirect('/login');
+  }
+}
 
 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  // let products=[
-  //   {
-  //     name:'Iphone 15',
-  //    category:'Mobile',
-  //    description:'Experience the iPhone 15  your dynamic companion.',
-  //    image:"https://fdn2.gsmarena.com/vv/pics/apple/apple-iphone-15-1.jpg"
-  //   },
-    
-  // ]
-
+  let user=req.session.user;
+  //console.log(user);
   productHelper.getAllProducts().then((product)=>{
     //console.log(product);
-    res.render('user/view-products',{product});
+    res.render('user/view-products',{product,user});
   })
+
 
 });
 
 router.get('/login',function(req,res){
-  res.render('user/login')
+  if(req.session.loggedIn){
+    res.redirect('/');
+  }else{
+    res.render('user/login',{'loginError':req.session.loginError});
+    req.session.loginError = false;
+  }
 });
 
 router.get('/signup',function(req,res){
@@ -34,9 +40,8 @@ router.get('/signup',function(req,res){
 });
 
 router.post('/signup',function(req,res){
-  //console.log(req.body);
   userHelper.doSignUP(req.body).then((response)=>{
-    console.log(response);
+    //console.log(response);
   })
   .catch((err)=>{
     res.status(500).send('Sign up failed');
@@ -47,11 +52,23 @@ router.post('/signup',function(req,res){
 router.post('/login',(req,res)=>{
   userHelper.doLogin(req.body).then((response)=>{
     if(response.status){
+      req.session.loggedIn = true;
+      req.session.user = response.user;
       res.redirect('/');
     }else{
+      req.session.loginError = 'Invalid Username or Password';
       res.redirect('/login');
     }
   })
+})
+
+router.get('/logout',(req,res)=>{
+  req.session.destroy();
+  res.redirect('/');
+})
+
+router.get('/cart',varifyLogin,(req,res)=>{
+  res.render('user/cart');
 })
 
 

@@ -6,6 +6,8 @@ var logger = require('morgan');
 var hbs = require('express-handlebars');
 var fileUpload = require('express-fileupload');
 var db=require('./config/connection');
+var session=require('express-session');
+var nocache=require('nocache');
 
 //Connecting to database
 db.connectToDatabase();
@@ -28,6 +30,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileUpload());
+app.use(session({secret:'key',cookie:{maxAge:600000}}));
+app.use(nocache());
 
 ///// When image is not displayed in view-products
 // process.env.PWD = process.cwd()   
