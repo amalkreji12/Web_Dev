@@ -1,6 +1,7 @@
 var db = require('../config/connection');
 var collection = require('../config/collections');
 const collections = require('../config/collections');
+const { resolve } = require('express-hbs/lib/resolver');
 //var { ObjectId } = require ('mongodb')
 var objectId = require("mongodb").ObjectId;
 
@@ -39,6 +40,28 @@ module.exports = {
       db.getDb().collection(collections.PRODUCT_COLLECTION).deleteOne({_id:new objectId(proId)}).then((response)=>{
         console.log(response);
         resolve(response);
+      })
+    })
+  },
+
+  getProductDetails(proId){
+    return new Promise((resolve,reject)=>{
+      db.getDb().collection(collections.PRODUCT_COLLECTION).findOne({_id:new objectId(proId)}).then((product)=>{
+        resolve(product);
+      })
+    })
+  },
+
+  updateProduct(proId,proDetails){
+    return new Promise((resolve,reject)=>{
+      db.getDb().collection(collections.PRODUCT_COLLECTION).updateOne({_id:new objectId(proId)},{
+        $set:{
+          name:proDetails.name,
+          description:proDetails.description,
+          category:proDetails.category,
+        }
+      }).then((response)=>{
+        resolve();
       })
     })
   }

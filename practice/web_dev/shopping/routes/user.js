@@ -41,7 +41,6 @@ router.get('/signup',function(req,res){
 
 router.post('/signup',function(req,res){
   userHelper.doSignUP(req.body).then((response)=>{
-    //console.log(response);
   })
   .catch((err)=>{
     res.status(500).send('Sign up failed');
