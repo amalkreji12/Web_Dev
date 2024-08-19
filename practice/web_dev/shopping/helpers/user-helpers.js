@@ -91,6 +91,17 @@ module.exports = {
             ]).toArray();
             resolve(cartItems[0].cartItems);
         })
+    },
+
+    getCartCount(userId){
+        return new Promise(async(resolve,reject)=>{
+            let count=0
+            let cart=await db.getDb().collection(collections.CART_COLLECTION).findOne({user:new objectId(userId)});
+            if(cart){
+                count=cart.products.length;
+            }
+            resolve(count);
+        })
     }
 
 
