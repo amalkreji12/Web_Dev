@@ -17,9 +17,9 @@
                         <input type="text" name="description" value="{{product.description}}" id="disabledTextInput" class="form-control" placeholder="Disabled input">
                     </div>
                     <div class="mb-3">
-                        <img src="/product-images/{{product._id}}.png" alt="" style="width: 100px;height:auto;">
+                        <img src="/product-images/{{product._id}}.png" alt="" id="imgView" style="width: 100px;height:auto;">
                         <label for="formFile" class="form-label">Image</label>
-                        <input class="form-control" name="img" type="file" id="formFile">
+                        <input class="form-control" name="img" type="file" onchange="viewImage(event)" >
                     </div>
                     <button type="submit" class="btn btn-primary mt-3 w-100">Submit</button>
                 </form>
@@ -28,3 +28,9 @@
         </div>
     </div>
 </section>
+
+<script>
+    function viewImage(event){
+        document.getElementById('imgView').src=URL.createObjectURL(event.target.files[0]);
+    }
+</script>

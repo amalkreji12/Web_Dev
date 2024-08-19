@@ -3,6 +3,7 @@ var router = express.Router();
 var productHelper =  require('../helpers/product-helpers');
 var userHelper = require('../helpers/user-helpers');
 
+
 // used to check whether the user is logged in or not
 const varifyLogin = (req,res,next)=>{
   if(req.session.loggedIn){
@@ -45,7 +46,9 @@ router.post('/signup',function(req,res){
   .catch((err)=>{
     res.status(500).send('Sign up failed');
   })
-
+  req.session.loggedIn=true;
+  req.session.user=response;
+  res.redirect('/');
 });
 
 router.post('/login',(req,res)=>{
@@ -66,8 +69,16 @@ router.get('/logout',(req,res)=>{
   res.redirect('/');
 })
 
-router.get('/cart',varifyLogin,(req,res)=>{
+router.get('/cart',varifyLogin,async(req,res)=>{
+  let products=await userHelper.getCartProducts(req.session.user._id)
+  console.log(products);  
   res.render('user/cart');
+})
+
+router.get('/add-to-cart/:id',varifyLogin,(req,res)=>{
+  userHelper.addToCart(req.params.id,req.session.user._id).then(()=>{
+    res.redirect('/');
+  })
 })
 
 

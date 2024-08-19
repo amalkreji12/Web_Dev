@@ -1,42 +1,102 @@
 var db = require('../config/connection');
 var collections = require('../config/collections');
 const bcrypt = require('bcrypt');
+const { response } = require('express');
+var objectId = require("mongodb").ObjectId;
 
 
 module.exports = {
     doSignUP(userData) {
-        return new Promise(async function(resolve, reject){
+        return new Promise(async function (resolve, reject) {
             userData.password = await bcrypt.hash(userData.password, 10);
-            db.getDb().collection(collections.USER_COLLECTION).insertOne(userData).then((data)=>{
+            db.getDb().collection(collections.USER_COLLECTION).insertOne(userData).then((data) => {
                 //console.log(userData);   
                 resolve(userData);
             })
         });
     },
 
-    doLogin(userData){
-        return new Promise(async(resolve, reject) =>{
+    doLogin(userData) {
+        return new Promise(async (resolve, reject) => {
             let loginStatus = false;
             let response = {};
-            let user = await db.getDb().collection(collections.USER_COLLECTION).findOne({email:userData.email});
-            if(user){
-                bcrypt.compare(userData.password,user.password).then((status)=>{
-                    if(status){
+            let user = await db.getDb().collection(collections.USER_COLLECTION).findOne({ email: userData.email });
+            if (user) {
+                bcrypt.compare(userData.password, user.password).then((status) => {
+                    if (status) {
                         console.log('Login Success');
                         response.user = user;
                         response.status = true;
                         resolve(response);
-                    }else{
+                    } else {
                         console.log('Login Failed / Incorrect password');
-                        resolve({status:false});
+                        resolve({ status: false });
                     }
                 })
-            }else{
+            } else {
                 console.log('Login Failed');
-                resolve({status:false});
+                resolve({ status: false });
             }
         })
+    },
+
+    addToCart(proId, userId) {
+        return new Promise(async (resolve, reject) => {
+            let usercart = await db.getDb().collection(collections.CART_COLLECTION).findOne({ user: new objectId(userId) });
+            if (usercart) {
+                db.getDb().collection(collections.CART_COLLECTION).updateOne({ user: new objectId(userId) },
+                    {
+
+                        $push: { products: new objectId(proId) },
+                        
+                    }
+                ).then((response)=>{
+                    resolve();
+                })
+            } else {
+                let cartObj = {
+                    user: new objectId(userId),
+                    products: [new objectId(proId)],
+                }
+                db.getDb().collection(collections.CART_COLLECTION).insertOne(cartObj).then((response) => {
+                    resolve();
+                })
+            }
+        })
+    },
+
+    getCartProducts(userId){
+        return new Promise(async(resolve,reject)=>{
+            let cartItems= await db.getDb().collection(collections.CART_COLLECTION).aggregate([
+                {
+                    $match:{user:new objectId(userId)}
+                },
+                {
+                    $lookup:{
+                        from:collections.PRODUCT_COLLECTION,
+                        let:{proList:'$products'},
+                        pipeline:[
+                            {
+                                $match:{
+                                    $expr:{
+                                        $in:['$_id','$$proList']
+                                    }
+                                }
+                            }
+                        ],
+                        as:'cartItems'
+                    }
+                }
+
+            ]).toArray();
+            resolve(cartItems[0].cartItems);
+        })
     }
+
+
+
+
+
 };
 
 
