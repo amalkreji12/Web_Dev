@@ -80,9 +80,11 @@ router.get('/cart',varifyLogin,async(req,res)=>{
   res.render('user/cart',{products,user:req.session.user});
 })
 
-router.get('/add-to-cart/:id',varifyLogin,(req,res)=>{
+router.get('/add-to-cart/:id',(req,res)=>{   //verifyLogin is removed from argument to use ajax
+  console.log('api called');
   userHelper.addToCart(req.params.id,req.session.user._id).then(()=>{
-    res.redirect('/');
+    res.json({status:true})
+    //res.redirect('/');
   })
 })
 
