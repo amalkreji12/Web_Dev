@@ -76,8 +76,13 @@ router.get('/logout',(req,res)=>{
 
 router.get('/cart',varifyLogin,async(req,res)=>{
   let products=await userHelper.getCartProducts(req.session.user._id)
-  console.log(products);  
-  res.render('user/cart',{products,user:req.session.user});
+  console.log(products);
+  if(products.length==0){
+    res.render('user/empty-cart',{user:req.session.user});
+  }else{
+    res.render('user/cart',{products,user:req.session.user});
+  }  
+  
 })
 
 router.get('/add-to-cart/:id',(req,res)=>{   //verifyLogin is removed from argument to use ajax

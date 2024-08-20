@@ -89,7 +89,12 @@ module.exports = {
                 }
 
             ]).toArray();
-            resolve(cartItems[0].cartItems);
+            if (cartItems.length > 0 && cartItems[0].cartItems) {
+                resolve(cartItems[0].cartItems);
+            } else {
+                resolve([]); // Cart is empty or no matching products found
+            }
+            //resolve(cartItems[0].cartItems);
         })
     },
 
