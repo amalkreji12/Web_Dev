@@ -92,25 +92,45 @@ module.exports = {
                     $match: { user: new objectId(userId) }
                 },
                 {
-                    $lookup: {
-                        from: collections.PRODUCT_COLLECTION,
-                        let: { proList: '$products' },
-                        pipeline: [
-                            {
-                                $match: {
-                                    $expr: {
-                                        $in: ['$_id', '$$proList']
-                                    }
-                                }
-                            }
-                        ],
-                        as: 'cartItems'
+                    $unwind:'$products'
+                },
+                {
+                    $project:{
+                        item:'$products.item',
+                        quantity:'$products.quantity'
+                    }
+                },
+                {
+                    $lookup:{
+                        from:collections.PRODUCT_COLLECTION,
+                        localField:'item',
+                        foreignField:'_id',
+                        as:'product'
                     }
                 }
+                // {
+                //     $lookup: {
+                //         from: collections.PRODUCT_COLLECTION,
+                //         let: { proList: '$products' },
+                //         pipeline: [
+                //             {
+                //                 $match: {
+                //                     $expr: {
+                //                         $in: ['$_id', '$$proList']
+                //                     }
+                //                 }
+                //             }
+                //         ],
+                //         as: 'cartItems'
+                //     }
+                // }
 
             ]).toArray();
-            if (cartItems.length > 0 && cartItems[0].cartItems) {
-                resolve(cartItems[0].cartItems);
+            console.log(cartItems);
+            
+            if (cartItems.length > 0 ) {
+                //resolve(cartItems[0].cartItems);
+                resolve(cartItems)
             } else {
                 resolve([]); // Cart is empty or no matching products found
             }
