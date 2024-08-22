@@ -51,7 +51,7 @@ module.exports = {
                 let proExtist = usercart.products.findIndex(product => product.item == proId);
                 console.log(proExtist);
                 if (proExtist != -1) {
-                    db.getDb().collection(collections.CART_COLLECTION).updateOne({user:new objectId(userId), 'products.item': new objectId(proId) },
+                    db.getDb().collection(collections.CART_COLLECTION).updateOne({ user: new objectId(userId), 'products.item': new objectId(proId) },
                         {
                             $inc: { 'products.$.quantity': 1 }
                         }
@@ -155,16 +155,35 @@ module.exports = {
     },
 
     changeProductCount(details) {
-        details.count=parseInt(details.count);
+        details.count = parseInt(details.count);
+        //details.quantity = parseInt(details.quantity);
         return new Promise((resolve, reject) => {
-            db.getDb().collection(collections.CART_COLLECTION).updateOne({_id:new objectId(details.cart), 'products.item': new objectId(details.product) },
-                {
-                    $inc: { 'products.$.quantity': details.count }
-                }
-            ).then((response) => {
-                console.log(response);
-                resolve();
-            })
+            if (details.count == -1 && details.quantity == 1) {
+                db.getDb().collection(collections.CART_COLLECTION).updateOne({ _id: new objectId(details.cart) },
+                    {
+                        $pull: { products: { item: new objectId(details.product) } }
+                    }
+                ).then((response) => {
+                    resolve({ removeProduct: true })
+                })
+                
+            } else {
+                db.getDb().collection(collections.CART_COLLECTION).updateOne({ _id: new objectId(details.cart), 'products.item': new objectId(details.product) },
+                    {
+                        $inc: { 'products.$.quantity': details.count }
+                    }
+                ).then((response) => {
+                    //console.log(response);
+                    resolve(true);
+                })
+            }
+
+        })
+    },
+
+    deleteCartProduct(proId, userId) {
+        return new Promise((resolve, reject) => {
+            db.getDb().collection(collections.CART_COLLECTION).deleteOne({})
         })
     }
 
