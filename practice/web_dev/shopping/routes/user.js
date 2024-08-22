@@ -24,7 +24,6 @@ router.get('/', async function(req, res, next) {
     cartCount=await userHelper.getCartCount(req.session.user._id)
   }
   
-
   productHelper.getAllProducts().then((product)=>{
     res.render('user/view-products',{product,user,cartCount});
   })
@@ -76,7 +75,7 @@ router.get('/logout',(req,res)=>{
 
 router.get('/cart',varifyLogin,async(req,res)=>{
   let products=await userHelper.getCartProducts(req.session.user._id)
-  console.log(products);
+  //console.log(products);
   if(products.length==0){
     res.render('user/empty-cart',{user:req.session.user});
   }else{
@@ -93,6 +92,12 @@ router.get('/add-to-cart/:id',(req,res)=>{   //verifyLogin is removed from argum
   })
 })
 
+router.post('/change-product-quantity',(req,res,next)=>{
+  console.log(req.body)
+  userHelper.changeProductCount(req.body).then(()=>{
+    res.json({status:true})
+  })
+})
 
 
 module.exports = router;
