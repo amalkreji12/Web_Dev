@@ -8,6 +8,7 @@ var objectId = require("mongodb").ObjectId;
 module.exports = {
   addProduct(product, callback) {
     const database = db.getDb(); // Get the initialized database instance
+    
     database.collection('products').insertOne(product)
       .then((result) => {
         console.log("Product added:", result);
@@ -59,6 +60,7 @@ module.exports = {
           name:proDetails.name,
           description:proDetails.description,
           category:proDetails.category,
+          price:proDetails.price
         }
       }).then((response)=>{
         resolve();
