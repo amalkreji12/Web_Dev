@@ -17,6 +17,10 @@
                         <input type="text" name="description" value="{{product.description}}" id="disabledTextInput" class="form-control" placeholder="Disabled input">
                     </div>
                     <div class="mb-3">
+                        <label for="disabledTextInput" class="form-label">Price(₹)</label>
+                        <input type="number" name="price" value="{{product.price}}" id="disabledTextInput" class="form-control" placeholder="Price">
+                    </div>
+                    <div class="mb-3">
                         <img src="/product-images/{{product._id}}.png" alt="" id="imgView" style="width: 100px;height:auto;">
                         <label for="formFile" class="form-label">Image</label>
                         <input class="form-control" name="img" type="file" onchange="viewImage(event)" >
