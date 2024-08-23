@@ -181,9 +181,17 @@ module.exports = {
         })
     },
 
-    deleteCartProduct(proId, userId) {
+    deleteCartProduct(details) {
         return new Promise((resolve, reject) => {
-            db.getDb().collection(collections.CART_COLLECTION).deleteOne({})
+            db.getDb().collection(collections.CART_COLLECTION).updateOne({ _id: new objectId(details.cart) },
+                    {
+                        $pull: { products: { item: new objectId(details.product) } }
+                    }
+                ).then((response) => {
+                    resolve(response)
+                }).catch((error)=>{
+                    reject(error)
+                })
         })
     }
 

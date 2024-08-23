@@ -4,10 +4,30 @@
             <div class="col-10">
 
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3 class="fw-normal mb-0">Shopping Cart</h3>
+                    <h3 class="fw-normal mb-0"><i class="fa-solid fa-cart-shopping fa-lg"></i> Shopping Cart</h3>
+                </div>
+                <h4>You have {{products.length}} items in your cart</h4>
+                <br>
+
+                <div class="row d-flex justify-content-between align-items-center mb-3">
+                    <div class="col-md-2 col-lg-2 col-xl-2">
+                        {{!-- <h5 class="text-muted">Product</h5> --}}
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                        <h5 class="text-muted">Item</h5>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-2 ">
+                        <h5 class="text-muted">Quantity</h5>
+                    </div>
+                    <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                        <h5 class="text-muted">Price</h5>
+                    </div>
+                    <div class="col-md-1 col-lg-1 col-xl-1">
+                        {{!-- <h5 class="text-muted">Remove</h5> --}}
+                    </div>
                 </div>
 
-                
+
 
                 {{#each products}}
                 {{!-- {{#each this.product}} --}}
@@ -19,23 +39,25 @@
                                     alt="Cotton T-shirt">
                             </div>
                             <div class="col-md-3 col-lg-3 col-xl-3">
-                                <p class="lead fw-normal mb-2" style="font-family: 'Georgia', serif;">{{this.product.name}}</p>
+                                <p class="lead fw-normal mb-2" style="font-family: 'Georgia', serif;">
+                                    {{this.product.name}}</p>
                             </div>
-                        
+
                             <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                                 <div class="input-group">
                                     <span class="input-group-btn mr-2">
-                                        <button class=" btn btn-danger " 
+                                        <button class=" btn btn-danger "
                                             onclick="changeQuantity('{{this._id}}','{{this.product._id}}',1)">
                                             +
                                         </button>
                                     </span>
-                            
-                                    {{!-- <span id="{{this.product._id}}">{{this.quantity}}</span>    --}}
-                                    <output id="{{this.product._id}}" style="width: 30px;text-align: center;font-size: 22px;font-weight: bold">{{this.quantity}}</output>                           
-                                    
+
+                                    {{!-- <span id="{{this.product._id}}">{{this.quantity}}</span> --}}
+                                    <output id="{{this.product._id}}"
+                                        style="width: 30px;text-align: center;font-size: 22px;font-weight: bold">{{this.quantity}}</output>
+
                                     <span class="input-group-btn ml-2">
-                                        <button class="btn btn-success"  
+                                        <button class="btn btn-success"
                                             onclick="changeQuantity('{{this._id}}','{{this.product._id}}',-1)">
                                             -
                                         </button>
@@ -46,12 +68,15 @@
                             <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                                 <h5 class="mb-0">₹ {{product.price}}</h5>
                             </div>
+                           
+                                <div class="col-md-1 col-lg-1 col-xl-1 mr-4 ">
 
-                            <div class="col-md-1 col-lg-1 col-xl-1 mr-4 ">
-                                {{!-- <a href="/remove-product/{{this.product._id}}" class=" btn btn-danger ">Remove</a> --}}
-                                <a href="#!" style="color: #cecece; "><i class="fa-solid fa-trash-can fa-xl" style="color: #090a0b;"></i></a>
-                                
-                            </div>
+                                    <a href="/remove-product/{{this.product._id}}/{{this._id}}"
+                                        style="color: #cecece; "><i class="fa-solid fa-trash-can fa-xl"
+                                            style="color: #090a0b;"></i></a>
+
+                                </div>
+                           
                         </div>
                     </div>
                 </div>
@@ -77,8 +102,8 @@
 
 <script>
     function changeQuantity(cartId, proId, count) {
-        let quantity=parseInt(document.getElementById(proId).innerHTML)
-        count=parseInt(count)
+        let quantity = parseInt(document.getElementById(proId).innerHTML)
+        count = parseInt(count)
 
         $.ajax({
             url: '/change-product-quantity',
@@ -86,17 +111,17 @@
                 cart: cartId,
                 product: proId,
                 count: count,
-                quantity:quantity
+                quantity: quantity
             },
             method: 'post',
             success: function (response) {
-                if(response.removeProduct){
+                if (response.removeProduct) {
                     alert('Product removed from cart');
                     location.reload();
-                }else{
-                    document.getElementById(proId).innerHTML=quantity+count
+                } else {
+                    document.getElementById(proId).innerHTML = quantity + count
                 }
-                
+
 
             },
         })

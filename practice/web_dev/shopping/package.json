@@ -17,6 +17,7 @@
     "express-session": "^1.18.0",
     "hbs": "^4.2.0",
     "http-errors": "~1.6.3",
+    "just-handlebars-helpers": "^1.0.19",
     "mongodb": "^6.8.0",
     "morgan": "~1.9.1",
     "nocache": "^4.0.0",
