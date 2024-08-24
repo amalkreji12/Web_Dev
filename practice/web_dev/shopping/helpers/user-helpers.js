@@ -2,6 +2,7 @@ var db = require('../config/connection');
 var collections = require('../config/collections');
 const bcrypt = require('bcrypt');
 const { response } = require('express');
+const { resolve } = require('express-hbs/lib/resolver');
 var objectId = require("mongodb").ObjectId;
 
 
@@ -241,6 +242,38 @@ module.exports = {
             //console.log(total[0].total);
             
            // resolve(total[0].total);
+        })
+    },
+
+    placeOrder(details,products,total){
+        return new Promise((resolve,reject)=>{
+            console.log(details,products,total);
+            let status=details.paymentMethod === 'COD'?'placed':'pending'
+            let orderObj = {
+                deliveryDetails:{
+                    mobile:details.mobile,
+                    adderss:details.address,
+                    pincode:details.pin
+                },
+                userId:new objectId(details.userId),
+                paymentMethod:details.paymentMethod,
+                products:products,
+                totalAmount:total,
+                status:status
+            }
+            db.getDb().collection(collections.ORDER_COLLECTION).insertOne(orderObj).then((response)=>{
+                db.getDb().collection(collections.CART_COLLECTION).deleteOne({user:new objectId(details.userId)})
+                resolve()
+            })
+        })
+    },
+
+    getCartProductList(userId){
+        return new Promise(async(resolve,reject)=>{
+            let cart = await db.getDb().collection(collections.CART_COLLECTION).findOne({user:new objectId(userId)})
+            // console.log(cart)
+            // console.log(cart.products);
+            resolve(cart.products)
         })
     }
 
