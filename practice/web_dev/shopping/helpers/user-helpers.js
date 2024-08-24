@@ -166,7 +166,7 @@ module.exports = {
                 ).then((response) => {
                     resolve({ removeProduct: true })
                 })
-                
+
             } else {
                 db.getDb().collection(collections.CART_COLLECTION).updateOne({ _id: new objectId(details.cart), 'products.item': new objectId(details.product) },
                     {
@@ -174,7 +174,7 @@ module.exports = {
                     }
                 ).then((response) => {
                     //console.log(response);
-                    resolve(true);
+                    resolve({status:true});
                 })
             }
 
@@ -184,16 +184,67 @@ module.exports = {
     deleteCartProduct(details) {
         return new Promise((resolve, reject) => {
             db.getDb().collection(collections.CART_COLLECTION).updateOne({ _id: new objectId(details.cart) },
-                    {
-                        $pull: { products: { item: new objectId(details.product) } }
+                {
+                    $pull: { products: { item: new objectId(details.product) } }
+                }
+            ).then((response) => {
+                resolve(response)
+            }).catch((error) => {
+                reject(error)
+            })
+        })
+    },
+
+    getTotalAmount(userId) {
+        return new Promise(async (resolve, reject) => {
+            let total = await db.getDb().collection(collections.CART_COLLECTION).aggregate([
+                {
+                    $match: { user: new objectId(userId) }
+                },
+                {
+                    $unwind: '$products'
+                },
+                {
+                    $project: {
+                        item: '$products.item',
+                        quantity: '$products.quantity'
                     }
-                ).then((response) => {
-                    resolve(response)
-                }).catch((error)=>{
-                    reject(error)
-                })
+                },
+                {
+                    $lookup: {
+                        from: collections.PRODUCT_COLLECTION,
+                        localField: 'item',
+                        foreignField: '_id',
+                        as: 'product'
+                    }
+                },
+                {
+                    $project: {
+                        item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
+                    }
+                },
+                {
+                    $group:{
+                        _id:null,
+                        total:{$sum:{$multiply:['$quantity',{$toInt:'$product.price'}]}}
+                    }
+                }
+
+            ]).toArray();
+            if (total.length > 0) {
+                //resolve(cartItems[0].cartItems);
+                resolve(total[0].total)
+            } else {
+                resolve([]); // Cart is empty or no matching products found
+            }
+           
+            //console.log(total[0].total);
+            
+           // resolve(total[0].total);
         })
     }
+
+
 
 
 
