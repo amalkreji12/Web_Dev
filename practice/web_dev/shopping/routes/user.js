@@ -129,13 +129,33 @@ router.get('/place-order',varifyLogin,async(req,res)=>{
 
 router.post('/place-order',async(req,res)=>{
   let products = await userHelper.getCartProductList(req.body.userId)
-  let totalPrice = await userHelper.getTotalAmount(req.body.userId) 
-  // console.log(req.body);
+  let totalPrice = await userHelper.getTotalAmount(req.body.userId)
   userHelper.placeOrder(req.body,products,totalPrice).then((response)=>{
-    res.json({status:true})
+   res.json({status:true})
   })
-
   
 })
 
+router.get('/order-confirm',varifyLogin,(req,res)=>{
+  res.render('user/order-confirm',{user:req.session.user})
+})
+
+router.get('/orders',varifyLogin,async(req,res)=>{
+  let orders = await userHelper.getUserOrders(req.session.user._id)
+  // console.log(orders)
+  res.render('user/orders',{user:req.session.user,orders})
+  
+})
+
+router.get('/view-order-products/:id',async(req,res)=>{
+  let products = await userHelper.getOrderProducts(req.params.id)
+  res.render('user/view-order-products',{user:req.session.user,products})
+})
+
+
+
+
+
 module.exports = router;
+
+
