@@ -245,10 +245,18 @@ module.exports = {
         })
     },
 
+    
+
+
     placeOrder(details,products,total){
         return new Promise((resolve,reject)=>{
-            console.log(details,products,total);
+            //console.log(details,products,total);
+            function generateOrderId(){
+                return `ORDER-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+            }
+
             let status=details.paymentMethod === 'COD'?'placed':'pending'
+            const orderId = generateOrderId();
             let orderObj = {
                 deliveryDetails:{
                     mobile:details.mobile,
@@ -259,12 +267,15 @@ module.exports = {
                 paymentMethod:details.paymentMethod,
                 products:products,
                 totalAmount:total,
-                status:status
+                status:status,
+                date:new Date()  ,
+                orderId:orderId
             }
             db.getDb().collection(collections.ORDER_COLLECTION).insertOne(orderObj).then((response)=>{
                 db.getDb().collection(collections.CART_COLLECTION).deleteOne({user:new objectId(details.userId)})
                 resolve()
             })
+            
         })
     },
 
