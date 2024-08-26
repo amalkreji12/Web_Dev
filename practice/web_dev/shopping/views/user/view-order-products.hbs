@@ -1,0 +1,63 @@
+{{!--
+
+
+<section>
+    <div class="container mt-5">
+        <div class="row">
+            {{#each products}}
+
+            <div class="col-md-3 p-3">
+                <div class="card " style="width: 15rem; ">
+                    <img src="/product-images/{{this.product._id}}.png" alt="..." style="height: 15rem;" />
+                    <div class="card-body">
+                        <h5 class="card-title">{{this.product.name}}</h5>
+                        <p class="card-text">{{this.category.description}}</p>
+                        <p class="card-text">Quantity -{{this.quantity}}</p>
+                        <p>Price ₹{{this.product.price}}</p>
+                        <div>
+                            <button onclick="addToCart('{{this._id}}')" class="btn btn-primary ml-5">Add to
+                                Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+
+        </div>
+    </div>
+</section>
+--}}
+
+
+<section style="background-color: #eee;">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            {{#each products}}
+            <div class="col-md-8 col-lg-6 col-xl-4">
+                <div class="card text-black">
+                    
+                    <img src="/product-images/{{this.product._id}}.png"
+                        class="card-img-top mx-auto d-block mt-2" alt="Apple Computer"  style="height: 15rem;width:15rem;"/>
+                    <div class="card-body">
+                        <div class="text-center">
+                            <h5 class="card-title">{{this.product.name}}</h5>
+                            <p class="text-muted mb-4">{{this.product.description}}</p>
+                        </div>
+                        <div>
+                            <div class="d-flex justify-content-between">
+                                <span>{{this.product.name}}</span><span>₹{{this.product.price}}</span>
+                            </div>
+                            
+                            <h6>Quantity - {{this.quantity}}</h6>
+                        </div>
+                        <div class="d-flex justify-content-between total font-weight-bold mt-4">
+                            <span>Total</span><span>₹{{this.product.price}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+
+    </div>
+</section>
