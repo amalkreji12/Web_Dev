@@ -239,7 +239,9 @@ module.exports = {
                 resolve([]); // Cart is empty or no matching products found
             }
            
-            //console.log(total[0].total);
+            // console.log(total[0].total);
+            // console.log(total);
+            
             
            // resolve(total[0].total);
         })
@@ -330,7 +332,19 @@ module.exports = {
             resolve(orderItems);
             //console.log(orderItems);
         })
-    }
+    },
+
+    getTotalAmountOrders(orderId){
+        return new Promise(async(resolve,reject)=>{
+            //console.log(orderId)
+            let orders= await db.getDb().collection(collections.ORDER_COLLECTION)
+            .find({_id:new objectId(orderId)}).toArray();
+            resolve(orders)
+            // resolve(orders[0].totalAmount);
+            // console.log(orders[0].totalAmount);
+            
+        })
+    },
 
 
 
