@@ -257,7 +257,7 @@ module.exports = {
                 return `${Date.now()}-${Math.floor(Math.random() * 10000)}`;
             }
 
-            let status=details.paymentMethod === 'COD'?'placed':'pending'
+            let status=details.paymentMethod === 'COD'?'Placed':'Pending'
             const orderId = generateOrderId();
             let orderObj = {
                 deliveryDetails:{
@@ -270,7 +270,7 @@ module.exports = {
                 products:products,
                 totalAmount:total,
                 status:status,
-                date:new Date()  ,
+                date:new Date(),
                 orderId:orderId
             }
             db.getDb().collection(collections.ORDER_COLLECTION).insertOne(orderObj).then((response)=>{
