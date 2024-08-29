@@ -150,7 +150,7 @@ router.get('/orders',varifyLogin,async(req,res)=>{
 router.get('/view-order-products/:id',varifyLogin,async(req,res)=>{
   let products = await userHelper.getOrderProducts(req.params.id)
   let amount= await userHelper.getTotalAmountOrders(req.params.id)
-  console.log(amount);
+  //console.log(amount);
   
   res.render('user/view-order-products',{user:req.session.user,products,amount})
 })
