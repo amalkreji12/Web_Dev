@@ -6,7 +6,7 @@ var userHelper = require('../helpers/user-helpers');
 
 // used to check whether the user is logged in or not
 const varifyLogin = (req, res, next) => {
-  if (req.session.loggedIn) {
+  if (req.session.user.loggedIn) {
     next();
   } else {
     res.redirect('/login');
@@ -32,11 +32,11 @@ router.get('/', async function (req, res, next) {
 });
 
 router.get('/login', function (req, res) {
-  if (req.session.loggedIn) {
+  if (req.session.user) {
     res.redirect('/');
   } else {
-    res.render('user/login', { 'loginError': req.session.loginError });
-    req.session.loginError = false;
+    res.render('user/login', { 'loginError': req.session.userloginError });
+    req.session.userloginError = false;
   }
 });
 
@@ -50,26 +50,27 @@ router.post('/signup', function (req, res) {
     .catch((err) => {
       res.status(500).send('Sign up failed');
     })
-  req.session.loggedIn = true;
   req.session.user = response;
+  req.session.user.loggedIn = true;
   res.redirect('/');
 });
 
 router.post('/login', (req, res) => {
-  userHelper.doLogin(req.body).then((response) => {
+  userHelper.doLogin(req.body).then((response) => { 
     if (response.status) {
-      req.session.loggedIn = true;
       req.session.user = response.user;
+      req.session.user.loggedIn = true;
       res.redirect('/');
     } else {
-      req.session.loginError = 'Invalid Username or Password';
+      req.session.userloginError = 'Invalid Username or Password';
       res.redirect('/login');
     }
   })
 })
 
 router.get('/logout', (req, res) => {
-  req.session.destroy();
+  // req.session.destroy();
+  req.session.user = null;
   res.redirect('/');
 })
 
